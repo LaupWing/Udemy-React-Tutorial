@@ -15,6 +15,7 @@ const buildControls = (props)=>(
                 label={control.label}
                 // The added property is defined in the BuildControl componet itself
                 added={()=>props.ingredientAdded(control.type)}
+                removed={()=>props.ingredientRemoved(control.type)}
             />
         ))}
     </div>)
