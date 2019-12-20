@@ -100,6 +100,7 @@ class BurgerBuilder extends Component{
         }
         return(
             <Aux>
+                {/* Here is a improvement state possible. Because there is no need to update teh order summary when it it is not showing */}
                 <Modal show={this.state.purchasing} modalClosed={this.purchaseCancelHandler}>
                     <OrderSummary 
                         price={this.state.totalPrice}
