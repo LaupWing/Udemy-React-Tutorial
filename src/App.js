@@ -11,8 +11,8 @@ class App extends Component{
                 <Layout>
                     <Switch>
                         {/* Use switch to only load one route */}
-                        <Route path="/" component={BurgerBuilder}/>
                         <Route path="/checkout" component={Checkout}/>   
+                        <Route path="/" exact component={BurgerBuilder}/>
                     </Switch>
                 </Layout>
             </div>
