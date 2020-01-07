@@ -12,7 +12,6 @@ import * as actionTypes from '../../store/actions'
 
 class BurgerBuilder extends Component{
     state = {
-        purchasable: false,
         purchasing: false,
         loading: false,
         error: false
@@ -42,26 +41,10 @@ class BurgerBuilder extends Component{
                 return sum + el 
             },0)
         // if sum is higher than 0 it is true
-        this.setState({purchasable: sum>0})
+        // this.setState({purchasable: sum>0})
+        return sum >0
 
     }
-    // State changes should be in the same component as where the state is defined
-    // addIngredientHandler = (type) =>{
-    //     const oldCount = this.state.ingredients[type]
-    //     const updatedCount = oldCount +1
-    //     const updatedIngredients = {
-    //         ...this.state.ingredients
-    //     }
-    //     updatedIngredients[type] = updatedCount
-    //     const priceAddation = INGREDIENT_PRICES[type]
-    //     const oldPrice = this.state.totalPrice
-    //     const newPrice = oldPrice + priceAddation
-    //     this.setState({
-    //         totalPrice: newPrice,
-    //         ingredients: updatedIngredients
-    //     })
-    //     this.updatePurchaseState(updatedIngredients)
-    // }
     purchaseHandler = ()=>{
         // we need to use this kind of function to get the this binding to this class
         this.setState({
@@ -74,42 +57,9 @@ class BurgerBuilder extends Component{
     }
 
     purchaseContinueHandler = ()=>{
-        // alert('You continued')
-        // this.setState({
-        //     loading: true
-        // })
-        const queryParams = []
-        for(let i in this.state.ingredients){
-            // encodeURIComponent is to convert a string to a covertable url string
-            queryParams.push(encodeURIComponent(i) +  '=' + encodeURIComponent(this.state.ingredients[i]))
-        }
-        queryParams.push('price='+this.state.totalPrice)
-        const queryString = queryParams.join('&')
-        this.props.history.push({
-            pathname: '/checkout',
-            search: '?' +queryString
-        })
+        this.props.history.push('/checkout')
     }
 
-    // removeIngredientHandler = (type)=>{
-    //     const oldCount = this.state.ingredients[type]
-    //     if(oldCount <=0){
-    //         return
-    //     }
-    //     const updatedCount = oldCount -1
-    //     const updatedIngredients = {
-    //         ...this.state.ingredients
-    //     }
-    //     updatedIngredients[type] = updatedCount
-    //     const priceDecution = INGREDIENT_PRICES[type]
-    //     const oldPrice = this.state.totalPrice
-    //     const newPrice = oldPrice - priceDecution
-    //     this.setState({
-    //         totalPrice: newPrice,
-    //         ingredients: updatedIngredients
-    //     })
-    //     this.updatePurchaseState(updatedIngredients)
-    // }
     render(){
         // 164 REWATCH
         const disabledInfo = {
@@ -130,7 +80,7 @@ class BurgerBuilder extends Component{
                         ingredientRemoved={this.props.onIngredientRemoved}
                         disabled={disabledInfo}
                         price={this.props.price}
-                        purchasable={this.state.purchasable}
+                        purchasable={this.updatePurchaseState(this.props.ings)}
                         ordered={this.purchaseHandler}
                     />
                 </Aux>
