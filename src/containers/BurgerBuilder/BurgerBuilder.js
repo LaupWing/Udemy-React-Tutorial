@@ -13,20 +13,10 @@ import * as burgerBuilderActions from '../../store/actions/index'
 class BurgerBuilder extends Component{
     state = {
         purchasing: false,
-        loading: false,
-        error: false
     }
 
     componentDidMount(){
-        // axios.get('https://react-my-burger-8ef1b.firebaseio.com/ingredients.json')
-        //     .then(response=>{
-        //         this.setState({
-        //             ingredients: response.data
-        //         })
-        //     })
-        //     .catch(e=>{
-        //         this.setState({error:true})
-        //     })
+        this.props.onInitIngredients()
     }
 
     // Rewatch 166
@@ -70,7 +60,7 @@ class BurgerBuilder extends Component{
         }
         let orderSummary = null
         
-        let burger = this.state.error ? <p>Ingredients cant be loaded</p> : <Spinner/> 
+        let burger = this.props.error ? <p>Ingredients cant be loaded</p> : <Spinner/> 
         if(this.props.ings){
             burger = (
                 <Aux>
@@ -92,9 +82,6 @@ class BurgerBuilder extends Component{
                 purchaseContinue={this.purchaseContinueHandler}
             />
         }
-        if(this.state.loading){
-            orderSummary = <Spinner/>
-        }
         return(
             <Aux>
                 {/* Here is a improvement state possible. Because there is no need to update teh order summary when it it is not showing */}
@@ -110,13 +97,15 @@ class BurgerBuilder extends Component{
 const mapDispatchToProps = dispatch =>{
     return{
         onIngredientAdded: (name)=>dispatch(burgerBuilderActions.addIngredient(name)),
-        onIngredientRemoved: (name)=>dispatch(burgerBuilderActions.removeIngredient(name))
+        onIngredientRemoved: (name)=>dispatch(burgerBuilderActions.removeIngredient(name)),
+        onInitIngredients: () => dispatch(burgerBuilderActions.initIngredients())
     }
 }
 const mapStateToProps = state =>{
     return{
         ings: state.ingredients,
-        price: state.totalPrice
+        price: state.totalPrice,
+        error: state.error
     }
 }
 
