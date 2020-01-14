@@ -14,18 +14,23 @@ const INGREDIENT_PRICES = {
     bacon: 0.5
 }
 
+// Here i have splitted the functions from the reducer
+// I have only done it to this one because i find it unnecesseray
+const addIngredient = (state, action) =>{
+    const updatedIngredient = {
+        [action.ingredientName]: state.ingredients[action.ingredientName] + 1
+    }
+    const updatedIngredients = updateObject(state.ingredients, updatedIngredient)
+    const updatedState = {
+        ingredients:updatedIngredients,
+        totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName]
+    }
+    return updateObject(state, updatedState)
+}
+
 const reducer = (state=initialState, action)=>{
     switch(action.type){
-        case actionTypes.ADD_INGREDIENT:
-            const updatedIngredient = {
-                [action.ingredientName]: state.ingredients[action.ingredientName] + 1
-            }
-            const updatedIngredients = updateObject(state.ingredients, updatedIngredient)
-            const updatedState = {
-                ingredients:updatedIngredients,
-                totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName]
-            }
-            return updateObject(state, updatedState)
+        case actionTypes.ADD_INGREDIENT: return addIngredient(state, action)
         case actionTypes.REMOVE_INGREDIENT:
             return{
                 ...state,
