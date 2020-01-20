@@ -81,6 +81,7 @@ export const setAuthRedirectPath = (path)=>{
 export const authCheckState = ()=>{
     return dispatch =>{
         const token = localStorage.getItem('token')
+        console.log(token)
         if(!token){
             dispatch(logout())
         }
@@ -91,7 +92,7 @@ export const authCheckState = ()=>{
             }else{
                 const userId = localStorage.getItem('userId')
                 dispatch(authSucces(token, userId))
-                dispatch(checkAuthTimeout((expirationDate.getTime()-new Date.getTime())/1000))
+                dispatch(checkAuthTimeout((expirationDate.getTime()-new Date().getTime())/1000))
             }
         }
     }
