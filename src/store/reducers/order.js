@@ -33,7 +33,7 @@ const reducer = (state = intialState, action)=>{
         case actionTypes.PURCHASE_BURGER_START:{
             return{
                 ...state,
-                loading: false
+                loading: true
             }
         }
         case actionTypes.FETCH_ORDERS_START:
